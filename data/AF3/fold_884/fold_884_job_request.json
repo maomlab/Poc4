@@ -1,0 +1,15 @@
+[{
+ "name": "884",
+ "modelSeeds": [
+  "430620996"
+ ],
+ "sequences": [
+  {
+   "proteinChain": {
+    "sequence": "MDSAVLPLAAGEYTVSVTKGDAPKKPNVVFVTENSSTDIGSYIYAVPGKKDVFTAVLQGSADSRVQDVATRIGTLLVKKSGCPSYVCVSGAVSEMDEMELVREVLTKSRSS",
+    "count": 1
+   }
+  }
+ ]
+}
+]
