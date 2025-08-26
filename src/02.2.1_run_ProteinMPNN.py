@@ -1,5 +1,9 @@
 #!/bin/bash
 
+##########################################################################################
+# this script is for an alternative strategy for sequence design compared with Frame2Seq #
+##########################################################################################
+
 PROTEIN_MPNN_PATH="${HOME}/turbo/opt/ProteinMPNN"
 
 folder_with_pdbs="data/"
