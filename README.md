@@ -40,7 +40,9 @@ To run these scripts, check out this repository
     cd Poc4
     # follow the instructions in install.sh to setup the environment
 
-then run the scripts in the `scripts` directory one at a time. This will use data in the `data/` directory, and create files in the `intermediate_data/` and `product/`directories. 
+Installation should be feasible in 30 minutes, but if you run into trouble please reach out for assitance.
+
+Then run the scripts in the `scripts` directory one at a time. This will use data in the `data/` directory, and create files in the `intermediate_data/` and `product/`directories. This will use a mix of different local, compute-cluster jobs using both CPU and GPU resources. Specific paths and parameters may need to adjusted to work with your system.
     
 The computational workflow builds on the following tools:
   * [Frame2seq](https://github.com/dakpinaroglu/Frame2seq)
@@ -55,13 +57,13 @@ The computational workflow builds on the following tools:
 
 ## Overview of the workflow
 
-   1. Generate initial templates of C. auris Poc4/IRC25 wildtype complex using AlphaFold3 (web)
-   2. Search for structural orthologs using FoldSeek (web)
-   3. Generate diverse sequnece designs for Poc4 given predicted Poc4/IRC25 backbone using Frame2seq on GPU
-   4. Compute MSAs for designs using ParallelFold CPU SLURM version of AlphaFold2
-   5. Predict structures for designs using ParallelFold GPU SLURM version of AlphaFold2
-   6. Generate sequence embeddings for Poc4, designs and orthologs
-   7. Plot and anlyze embeddings using MPLearn wrapper for UMAP and R
+  1. Generate initial templates of C. auris Poc4/IRC25 wildtype complex using AlphaFold3 (web)
+  2. Search for structural orthologs using FoldSeek (web)
+  3. Generate diverse sequnece designs for Poc4 given predicted Poc4/IRC25 backbone using Frame2seq on GPU
+  4. Compute MSAs for designs using ParallelFold CPU SLURM version of AlphaFold2
+  5. Predict structures for designs using ParallelFold GPU SLURM version of AlphaFold2
+  6. Generate sequence embeddings for Poc4, designs and orthologs
+  7. Plot and anlyze embeddings using MPLearn wrapper for UMAP and R
 
 ### License and Attribution
 The computational workflow is released under the MIT License. If you find this workflow useful, please cite:
