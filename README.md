@@ -38,9 +38,28 @@ To run these scripts, check out this repository
 
     git clone https://github.com/maomlab/Poc4
     cd Poc4
+    # follow the instructions in install.sh to setup the environment
 
 then run the scripts in the `scripts` directory one at a time. This will use data in the `data/` directory, and create files in the `intermediate_data/` and `product/`directories. 
     
+The computational workflow builds on the following tools:
+  * [Frame2seq](https://github.com/dakpinaroglu/Frame2seq)
+  * [ESM](https://github.com/facebookresearch/esm)
+  * [AlphaFold](https://alphafoldserver.com/)
+  * [FoldSeek](https://search.foldseek.com/search)
+  * [ParallelFold](https://github.com/Zuricho/ParallelFold)
+  * [MPLearn](https://github.com/maomlab/MPLearn)
+  * [BioPython](https://biopython.org/)
+  * [Apache Arrow](https://arrow.apache.org/docs/python/index.html)
+  * [SLURM](https://slurm.schedmd.com/documentation.html)
+
+
+### License and Attribution
+The computational workflow is released under the MIT License. If you find this workflow useful, please cite:
+
+    Rapala JR, Siddiq M, Wittkopp PJ, O'Meara MJ, O'Meara Deep TR,
+    Deep homology and design of proteasome chaperone proteins in Candida auris,
+    bioRxiv (2025), DOI: 10.1101/2025.05.14.654010, PMCID: PMC12132334
 
 
 
