@@ -53,6 +53,15 @@ The computational workflow builds on the following tools:
   * [Apache Arrow](https://arrow.apache.org/docs/python/index.html)
   * [SLURM](https://slurm.schedmd.com/documentation.html)
 
+## Overview of the workflow
+
+   1. Generate initial templates of C. auris Poc4/IRC25 wildtype complex using AlphaFold3 (web)
+   2. Search for structural orthologs using FoldSeek (web)
+   3. Generate diverse sequnece designs for Poc4 given predicted Poc4/IRC25 backbone using Frame2seq on GPU
+   4. Compute MSAs for designs using ParallelFold CPU SLURM version of AlphaFold2
+   5. Predict structures for designs using ParallelFold GPU SLURM version of AlphaFold2
+   6. Generate sequence embeddings for Poc4, designs and orthologs
+   7. Plot and anlyze embeddings using MPLearn wrapper for UMAP and R
 
 ### License and Attribution
 The computational workflow is released under the MIT License. If you find this workflow useful, please cite:
