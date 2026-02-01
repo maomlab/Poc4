@@ -47,10 +47,10 @@ module list
 # e.g.
 # 1) openjdk/18.0.1.1   2) gcc/13.2.0   3) image-libraries/220318   4) R/4.4.0   5) cuda/11.3.0   6) cudnn/11.3-v8.2.1
 
-export PATH=${HOME}/miniconda3/envs/parafold/bin/:${PATH}:
+export PATH=${HOME}/turbo/maom/opt/miniforge3/envs/parafold/bin/:${PATH}:
 
 # install parafold using the precise instructions https://github.com/Zuricho/ParallelFold
-${HOME}/miniconda/bin/activate parafold
+${HOME}/turbo/maom/opt/miniforge3/bin/activate parafold
 
 CONDA_ENV="parafold"
 PARAFOLD_PATH="${HOME}/turbo/opt/ParallelFold"

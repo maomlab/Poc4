@@ -2,4 +2,6 @@
 .Rhistory
 *~
 \#*
+.future
+Rplots.pdf
 __pycache__

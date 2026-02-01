@@ -139,3 +139,18 @@ system(submit_sbatch)
 
 
 # sbatch --account=tromeara99 --partition=gpu --array=1-5000 --ntasks-per-node=1 --cpus-per-task=2 --time=3:00:00 --mem-per-cpu=3GB --gres=gpu:1 src/subit_alphafold_monomer.slurm
+
+
+submit_sbatch <- prepare_AF2_jobs(
+    input_path = "intermediate_data/parafold/Frame2Seq_fixinterface_T1.0_v2/input",
+    output_path = "intermediate_data/parafold/Frame2Seq_fixinterface_T1.0_v2/output",
+    logs_path = "intermediate_data/parafold/Frame2Seq_fixinterface_T1.0_v2/logs_AF2",
+    slurm_account = "tromeara99",
+    slurm_partition = "gpu",
+    array_range = "1-5",
+    verbose = TRUE)
+
+system(submit_sbatch)
+
+
+# sbatch --account=tromeara99 --partition=gpu --array=1-5000 --ntasks-per-node=1 --cpus-per-task=2 --time=3:00:00 --mem-per-cpu=3GB --gres=gpu:1 src/subit_alphafold_monomer.slurm

@@ -30,6 +30,9 @@ prepare_MSA_jobs <- function(
             pattern = ".*",
             full.names = FALSE,
             recursive = FALSE))
+    if (verbose) {
+        cat("N total structures found: ", nrow(all_structure_meta), "\n", sep = "")
+    }
     
     output_meta <- tibble::tibble(
         structure_id = list.dirs(
@@ -38,10 +41,16 @@ prepare_MSA_jobs <- function(
             recursive = FALSE)) |>
         dplyr::mutate(
             msa_path = paste0(output_path, "/", structure_id))
-    
+
+    if (verbose) {
+        cat("N output structures found: ", nrow(output_meta), "\n", sep = "")
+        cat("Checking which ones are complete ...\n")
+    }    
+
     if (nrow(output_meta) == 0) {
         structures_todo_meta <- all_structure_meta
     } else {
+        # get a list of all the structure_id values for the ones that are complete
         prepared_structures_meta <- output_meta |>
             dplyr::rowwise() |>
             dplyr::do({
@@ -60,13 +69,14 @@ prepare_MSA_jobs <- function(
                 }
                 result
             })
-    
+
+        # clear out the ones that are done to give the ones that are left todo
         structures_todo_meta <- all_structure_meta |>
             dplyr::anti_join(
                 prepared_structures_meta,
                 by = "structure_id")
     }
-    
+
     structures_todo_meta |>
         readr::write_tsv(
             file = paste0(output_path, "/msa.todo"),
@@ -126,3 +136,15 @@ system(submit_sbatch)
 
 
 # sbatch --account=tromeara99 --partition=standard --array=1-5000 --ntasks-per-node=1 --cpus-per-task=8 --time=10:00:00 --mem-per-cpu=6GB src/sub_alphafold_multimer_msa.slurm
+
+
+submit_sbatch <- prepare_MSA_jobs(
+    input_path = "intermediate_data/parafold/Frame2Seq_fixinterface_T1.0_v2/input",
+    output_path = "intermediate_data/parafold/Frame2Seq_fixinterface_T1.0_v2/output",
+    logs_path = "intermediate_data/parafold/Frame2Seq_fixinterface_T1.0_v2/logs",
+    slurm_account = "tromeara99",
+    slurm_partition = "standard",
+    array_range = "1-2000",
+    verbose = TRUE)
+
+system(submit_sbatch)

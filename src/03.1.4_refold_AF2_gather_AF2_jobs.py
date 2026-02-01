@@ -30,5 +30,15 @@ af2_scores.to_csv(
     index = False,
     sep = "\t")
 
+
+
+
+af2_scores = gather_AF2_jobs(
+    job_path = "intermediate_data/parafold/Frame2Seq_fixinterface_T1.0_v2")
+af2_scores.to_csv(
+    "intermediate_data/parafold/Frame2Seq_fixinterface_T1.0_v2/af2_scores_20251023.tsv",
+    index = False,
+    sep = "\t")
+
     
     

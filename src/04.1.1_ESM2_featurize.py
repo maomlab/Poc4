@@ -97,5 +97,3 @@ dataset = embed_ESM2.extract_embeddings(model_name, fasta_file, verbose=True)
 pa.parquet.write_table(
     table = pa.Table.from_pandas(dataset),
     where = embedding_path)
-
-

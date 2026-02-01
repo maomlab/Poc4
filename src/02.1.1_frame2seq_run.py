@@ -74,6 +74,7 @@ shutil.move(
 
 #####################################################3
 
+# Cauris_884_irc25_AF3_Frame2seq_fixconserved_T1.0
 runner.design(
     pdb_file = "data/AF3/fold_884_irc25/fold_884_irc25_model_0.pdb",
     chain_id = "A",
@@ -88,3 +89,37 @@ runner.design(
 shutil.move(
     src = "frame2seq_outputs/seqs/seqs.fasta",
     dst = "intermediate_data/frame2seq_design/Cauris_884_irc25_AF3_Frame2seq_fixconserved_T1.0_5000_seqs.fasta")
+
+
+# Cauris_884_irc25_AF3_Frame2seq_fixinterface_T1.0
+runner.design(
+    pdb_file = "data/AF3/fold_884_irc25/fold_884_irc25_model_0.pdb",
+    chain_id = "A",
+    temperature = 1.0,
+    num_samples = 5000,
+    omit_AA = ["C"],
+    fixed_positions=[1, 3, 5, 12, 14, 16, 18, 24, 25, 26, 28, 30, 32, 33, 34, 35, 36, 37, 38, 39, 42, 44, 55, 56, 57, 58, 83, 85, 87],
+    save_indiv_seqs=False,
+    save_indiv_neg_pll=False,
+    verbose=True)
+
+shutil.move(
+    src = "frame2seq_outputs/seqs/seqs.fasta",
+    dst = "intermediate_data/frame2seq_design/Cauris_884_irc25_AF3_Frame2seq_fixinterface_T1.0_5000_v2_seqs.fasta")
+
+
+# Cauris_884_irc25_AF3_Frame2seq_fixinterface_T1.0
+runner.design(
+    pdb_file = "data/AF3/fold_884_irc25/fold_884_irc25_model_0.pdb",
+    chain_id = "A",
+    temperature = 1.0,
+    num_samples = 500000,
+    omit_AA = ["C"],
+    fixed_positions=[1, 3, 5, 12, 14, 16, 18, 24, 25, 26, 28, 30, 32, 33, 34, 35, 36, 37, 38, 39, 42, 44, 55, 56, 57, 58, 83, 85, 87],
+    save_indiv_seqs=False,
+    save_indiv_neg_pll=False,
+    verbose=True)
+
+shutil.move(
+    src = "frame2seq_outputs/seqs/seqs.fasta",
+    dst = "intermediate_data/frame2seq_design/Cauris_884_irc25_AF3_Frame2seq_fixinterface_T1.0_500000_v2_seqs.fasta")

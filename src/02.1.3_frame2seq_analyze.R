@@ -1,9 +1,5 @@
 
 
-frame2seq <- readr::read_tsv(
-    paste0("intermediate_data/frame2seq_design/Cauris_884_irc25_AF3_Frame2seq_fixinterface_T1.0_5000.tsv"),
-    show_col_types = FALSE)
-
 
 frame2seq_metadata <- data.frame(
     path = c(

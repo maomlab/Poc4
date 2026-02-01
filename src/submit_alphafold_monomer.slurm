@@ -39,7 +39,7 @@ module purge
 module restore cauris
 module list
 
-export PATH=${HOME}/miniconda3/envs/parafold/bin/:${HOME}/miniconda3/bin:${PATH}:
+export PATH=${HOME}/turbo/maom/opt/miniforge3/envs/parafold/bin/:${HOME}/turbo/maom/opt/miniforge3/bin:${PATH}:
 echo "which python: $(which python)"
 #conda activate parafold
 

@@ -4,13 +4,10 @@ load_af2_scores <- function(
     fasta_path,
     scores_path,
     job_tag) {
-    
+
     metadata <- readr::read_tsv(
         metadata_path,
         show_col_types = FALSE)
-    metadata <- metadata |>
-        dplyr::mutate(
-            structure_id = paste0(job_tag, "_", seq_id))
 
     seqs <- seqinr::read.fasta(file = fasta_path, seqtype = "AA") |>
         purrr::map_df(
@@ -22,17 +19,13 @@ load_af2_scores <- function(
 
     af2_scores <- readr::read_tsv(
         scores_path,
-        show_col_types = FALSE)
+        show_col_types = FALSE) |>
+        dplyr::mutate(
+            seq_id = structure_id |> stringr::str_extract("seq_[0-9]+$"))
     
     af2_scores <- af2_scores |>
-        dplyr::left_join(
-            metadata,
-            by = "structure_id") |>
-        dplyr::mutate(
-            seq_id = structure_id |> stringr::str_extract("seq_[0-9]+$")) |>
-        dplyr::left_join(
-            seqs,
-            by = "seq_id")
+        dplyr::left_join(metadata, by = "seq_id") |>
+        dplyr::left_join(seqs, by = "seq_id")
 
     af2_scores <- af2_scores |>
         dplyr::mutate(
@@ -42,20 +35,28 @@ load_af2_scores <- function(
 }
 
 af2_scores <- dplyr::bind_rows(
+#    load_af2_scores(
+#        metadata_path = "intermediate_data/frame2seq_design/Cauris_884_irc25_AF3_Frame2seq_T0.1_5000_metadata.tsv",
+#        fasta_path = "intermediate_data/frame2seq_design/Cauris_884_irc25_AF3_Frame2seq_T0.1_5000_seqs_clean.fasta",
+#        scores_path = "intermediate_data/parafold/af2_scores.tsv",
+#        job_tag = "Frame2Seq_T0.1"),
+#    load_af2_scores(
+#        metadata_path = "intermediate_data/frame2seq_design/Cauris_884_irc25_AF3_Frame2seq_fixinterface_T1.0_5000_metadata.tsv",
+#        fasta_path = "intermediate_data/frame2seq_design/Cauris_884_irc25_AF3_Frame2seq_fixinterface_T1.0_5000_seqs_clean.fasta",
+#        scores_path = "intermediate_data/parafold/Frame2Seq_fixinterface_T1.0/af2_scores.tsv",
+#        job_tag = "Frame2Seq_fixinterface_T1.0"),
     load_af2_scores(
-        metadata_path = "intermediate_data/frame2seq_design/Cauris_884_irc25_AF3_Frame2seq_T0.1_5000_metadata.tsv",
-        fasta_path = "intermediate_data/frame2seq_design/Cauris_884_irc25_AF3_Frame2seq_T0.1_5000_seqs_clean.fasta",
-        scores_path = "intermediate_data/parafold/af2_scores.tsv",
-        job_tag = "Frame2Seq_T0.1"),
-    load_af2_scores(
-        metadata_path = "intermediate_data/frame2seq_design/Cauris_884_irc25_AF3_Frame2seq_fixinterface_T1.0_5000_metadata.tsv",
-        fasta_path = "intermediate_data/frame2seq_design/Cauris_884_irc25_AF3_Frame2seq_fixinterface_T1.0_5000_seqs_clean.fasta",
-        scores_path = "intermediate_data/parafold/Frame2Seq_fixinterface_T1.0/af2_scores.tsv",
-        job_tag = "Frame2Seq_fixinterface_T1.0"))
+        metadata_path = "intermediate_data/frame2seq_design/Cauris_884_irc25_AF3_Frame2seq_fixinterface_T1.0_500000_v2_metadata_good_score.tsv",
+        fasta_path = "intermediate_data/frame2seq_design/Cauris_884_irc25_AF3_Frame2seq_fixinterface_T1.0_500000_v2_seqs_good_score.fasta",
+        scores_path = "intermediate_data/parafold/Frame2Seq_fixinterface_T1.0_v2/af2_scores_20251023.tsv",
+        job_tag = "Frame2Seq_fixinterface_T1.0_v2"))
+    
+
+
 
 af2_scores |>
     readr::write_tsv(
-        "product/frame2seq_design/af2_scores_20250506.tsv")
+        "product/frame2seq_design/af2_scores_20251103.tsv")
 
 
 
@@ -78,7 +79,7 @@ plot <- ggplot2::ggplot(
         subtitle = "By Rank and Design Protocols")
 
 ggplot2::ggsave(
-    filename = "product/frame2seq_design/plddt_histogram_rank_protocol_20241027.pdf",
+    filename = "product/frame2seq_design/plddt_histogram_rank_protocol_20251103.pdf",
     width = 7,
     height = 4,
     useDingbats = FALSE)
@@ -190,19 +191,21 @@ collate_designs <- function(
     
     wt_884_fasta <- readr::read_file(
         file = "data/B9J08_000884.fasta")
-    
-    
-    
-    con <- file(paste0(output_path, "/designs.fasta"), "w")
+
+    con <- file(paste0(output_path, "/wt_884.fasta"), "w")
     writeLines(wt_884_fasta, con = con)
-    designs$fasta |>
-        paste0(collapse = "\n") |>
+    close(con)
+
+    con <- file(paste0(output_path, "/designs.fasta"), "w")
+    paste0(
+        "> ", designs$seq_id, "\n",
+        designs$fasta,
+        collapse = "\n") |>
         writeLines(con = con)
     close(con)
     
-    
+
     designs |>
-        dplyr::select(-fasta) |>
         readr::write_tsv(
             paste0(output_path, "/summary.tsv"))
     
@@ -259,7 +262,7 @@ top_designs <- af2_scores |>
         af2_plddt > 96,
         score < 0.6) |>
     dplyr::arrange(desc(af2_plddt)) |>
-    dplyr::distinct(seq_id, .keep_all = TRUE) |>
+    dplyr::distinct(fasta, .keep_all = TRUE) |>
     dplyr::arrange(recovery_percent) |>
     head(30)
 output_path <- "product/frame2seq_design/designs_fixinterface_T1.0_af2_pldd2_gt96_score_lt0.6_top30_20241022"
@@ -269,5 +272,33 @@ collate_designs(
     output_path = output_path)
 
 
+#############
+
+all_designs <- af2_scores |>
+    dplyr::filter(
+        job_tag == "Frame2Seq_fixinterface_T1.0",
+        af2_plddt > 96,
+        score < 0.6) |>
+    dplyr::arrange(desc(af2_plddt)) |>
+    dplyr::distinct(fasta, .keep_all = TRUE) |>
+    dplyr::arrange(recovery_percent)
+output_path <- "product/frame2seq_design/designs_fixinterface_T1.0_af2_pldd2_gt96_score_lt0.6_20251001"
+collate_designs(
+    designs = all_designs,
+    output_path = output_path)
 
 
+
+# Round 2
+all_designs <- af2_scores |>
+    dplyr::filter(
+        job_tag == "Frame2Seq_fixinterface_T1.0_v2",
+        af2_plddt > 96,
+        score < 0.6) |>
+    dplyr::arrange(desc(af2_plddt)) |>
+    dplyr::distinct(fasta, .keep_all = TRUE) |>
+    dplyr::arrange(recovery_percent)
+output_path <- "product/frame2seq_design/designs_fixinterface_T1.0_af2_v2_pldd2_gt96_score_lt0.6_20251103"
+collate_designs(
+    designs = all_designs,
+    output_path = output_path)

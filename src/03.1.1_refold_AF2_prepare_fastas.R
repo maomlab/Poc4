@@ -54,7 +54,7 @@ prepare_fastas <- function(
             data <- .
     
             fasta_path <- paste0(
-                output_path,
+                output_path, "/",
                 data$dataset[1], "_",
                 data$seq_id[1])
             if (!dir.exists(fasta_path)) {
@@ -87,5 +87,14 @@ prepare_fastas(
     sequence_labels_fname = "intermediate_data/frame2seq_design/Cauris_884_irc25_AF3_Frame2seq_fixinterface_T1.0_5000_metadata.tsv",
     dataset_tag = "Frame2Seq_fixinterface_T1.0",
     output_path = "intermediate_data/parafold/Frame2Seq_fixinterface_T1.0/input",
+    verbose = TRUE)
+
+
+
+prepare_fastas(
+    fasta_fname = "intermediate_data/frame2seq_design/Cauris_884_irc25_AF3_Frame2seq_fixinterface_T1.0_500000_v2_seqs_good_score.fasta",
+    sequence_labels_fname = "intermediate_data/frame2seq_design/Cauris_884_irc25_AF3_Frame2seq_fixinterface_T1.0_500000_v2_metadata_good_score.tsv",
+    dataset_tag = "Frame2Seq_fixinterface_T1_v2.0",
+    output_path = "intermediate_data/parafold/Frame2Seq_fixinterface_T1.0_v2/input",
     verbose = TRUE)
 
