@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/983692024.svg)](https://doi.org/10.5281/zenodo.19052664)
+
 # Deep homology and design of proteasome chaperone proteins in Candida auris
 Jackson R. Rapala<sup>1,2</sup>, Mohammad Siddiq<sup>3,4</sup>, Patricia J. Wittkopp<sup>3,4</sup>, Matthew J. O’Meara<sup>2,5*</sup>, Teresa R. O’Meara<sup>1*</sup>
 <i><sup>1</sup>Department of Microbiology and Immunology, University of Michigan Medical School;
